@@ -7,7 +7,7 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent  : public juce::AudioAppComponent, public juce::Timer, public juce::Slider::Listener
+class MainComponent  : public juce::AudioAppComponent, public juce::Slider::Listener
 {
 public:
     //==============================================================================
@@ -23,7 +23,6 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 
-    void timerCallback() override;
     void sliderValueChanged (juce::Slider* slider) override;
 
 private:
@@ -35,9 +34,8 @@ private:
     bool isBeep;
     
     juce::Slider sliderTime;
-    int timeInterval = 1000;
     
-    int sampsPerBeat = 11250;
+    int sampsPerBeat = currentSampleRate;
     int sampsCounterBeep = sampsPerBeat;
     int sampsCounterSilence = sampsPerBeat;
 

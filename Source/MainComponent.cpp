@@ -19,9 +19,7 @@ MainComponent::MainComponent()
         // Specify the number of input and output channels that we want to open
         setAudioChannels (2, 2);
     }
-    
-    startTimer(timeInterval);
-    
+        
     addAndMakeVisible(&sliderTime);
     sliderTime.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     sliderTime.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 300, 50);
@@ -39,33 +37,29 @@ void MainComponent::sliderValueChanged (juce::Slider* slider)
 {
     if(slider == &sliderTime)
     {
-        stopTimer();
-        
-        timeInterval = (int)sliderTime.getValue() / 60;
-        startTimer(timeInterval);
+        sampsPerBeat = currentSampleRate / ((int)sliderTime.getValue() / 30);
+        sampsCounterBeep = sampsPerBeat / 4;
+        sampsCounterSilence = sampsPerBeat / 4;
     }
 }
 
-void MainComponent::timerCallback()
-{
-    if(getTimerInterval() == timeInterval)
-    {
-        isBeep = !isBeep;
-        
-        DBG("isBeep flipped");
-    }
-    return;
-}
+
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     
     currentSampleRate = sampleRate;
     
-    auto cyclesPerSample = currentFrequency / currentSampleRate;         // [2]
-    angleDelta = cyclesPerSample * 2.0 * juce::MathConstants<double>::pi;          // [3]
+    sampsPerBeat = currentSampleRate / 4;
+    sampsCounterBeep = sampsPerBeat / 4;
+    sampsCounterSilence = sampsPerBeat / 4;
     
-    isBeep = true;
+    DBG(currentSampleRate);
+    
+    
+    auto cyclesPerSample = currentFrequency / currentSampleRate;
+    angleDelta = cyclesPerSample * 2.0 * juce::MathConstants<double>::pi;
+    
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -101,15 +95,15 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
             rightBuffer[sample] = 0.0f;
             sampsCounterSilence--;
         }
-        else if(sampsCounterBeep == 0)
+        
+        if(sampsCounterBeep == 0 && sampsCounterSilence == 0)
         {
-            
-                sampsCounterSilence = sampsPerBeat;
+            sampsCounterBeep = sampsPerBeat;
             
         }
         else if(sampsCounterSilence == 0)
         {
-            sampsCounterBeep = sampsPerBeat;
+            sampsCounterSilence = sampsPerBeat;
         }
     }
     
