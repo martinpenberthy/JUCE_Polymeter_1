@@ -35,6 +35,7 @@ private:
     bool isBeep;
     
     juce::Slider sliderTime;
+    int timeInterval = 1000;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

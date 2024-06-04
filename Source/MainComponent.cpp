@@ -20,7 +20,7 @@ MainComponent::MainComponent()
         setAudioChannels (2, 2);
     }
     
-    startTimer(30);
+    startTimer(timeInterval);
     
     addAndMakeVisible(&sliderTime);
     sliderTime.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
@@ -39,13 +39,14 @@ void MainComponent::sliderValueChanged (juce::Slider* slider)
     if(slider == &sliderTime)
     {
         stopTimer();
-        startTimer(sliderTime.getValue());
+        timeInterval = (int)sliderTime.getValue();
+        startTimer(timeInterval);
     }
 }
 
 void MainComponent::timerCallback()
 {
-    if(getTimerInterval() == 30)
+    if(getTimerInterval() == timeInterval)
     {
         isBeep = !isBeep;
         
