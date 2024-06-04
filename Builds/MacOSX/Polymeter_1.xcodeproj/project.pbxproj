@@ -53,6 +53,7 @@
 		28ABC0AC97C0CE55634887B8 /* include_juce_graphics.mm */ /* include_juce_graphics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_graphics.mm; path = ../../JuceLibraryCode/include_juce_graphics.mm; sourceTree = SOURCE_ROOT; };
 		29FF8313605B49005F162978 /* Info-App.plist */ /* Info-App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = SOURCE_ROOT; };
 		4154CCB981C080CC1828F238 /* include_juce_events.mm */ /* include_juce_events.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_events.mm; path = ../../JuceLibraryCode/include_juce_events.mm; sourceTree = SOURCE_ROOT; };
+		46500F6DF1B2C81D68C5F2F1 /* TimeComponent.h */ /* TimeComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeComponent.h; path = ../../Source/TimeComponent.h; sourceTree = SOURCE_ROOT; };
 		4A4A23E12BB38AA36FF4F480 /* juce_gui_extra */ /* juce_gui_extra */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_extra; path = /Applications/JUCE/modules/juce_gui_extra; sourceTree = "<absolute>"; };
 		558678D1C5C1A3922C5EA4EA /* juce_data_structures */ /* juce_data_structures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_data_structures; path = /Applications/JUCE/modules/juce_data_structures; sourceTree = "<absolute>"; };
 		570360021297803193233976 /* MainComponent.h */ /* MainComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainComponent.h; path = ../../Source/MainComponent.h; sourceTree = SOURCE_ROOT; };
@@ -170,6 +171,7 @@
 		5373939787578EC8131FE21F /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				46500F6DF1B2C81D68C5F2F1,
 				9EC0F85B9BA8BD9835318183,
 				570360021297803193233976,
 				FBD1CE71B41FE2E3EED6B1C8,

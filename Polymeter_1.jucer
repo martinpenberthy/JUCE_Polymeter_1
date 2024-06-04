@@ -4,6 +4,7 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="iQ0dIE" name="Polymeter_1">
     <GROUP id="{0750AE38-80E7-1A8C-D20F-C461447240E1}" name="Source">
+      <FILE id="ruI1iI" name="TimeComponent.h" compile="0" resource="0" file="Source/TimeComponent.h"/>
       <FILE id="MZqPpk" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="e8ftbR" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="QMFmGt" name="MainComponent.cpp" compile="1" resource="0"

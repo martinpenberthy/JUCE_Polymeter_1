@@ -37,9 +37,8 @@ void MainComponent::sliderValueChanged (juce::Slider* slider)
 {
     if(slider == &sliderTime)
     {
-        sampsPerBeat = currentSampleRate / ((int)sliderTime.getValue() / 30);
-        sampsCounterBeep = sampsPerBeat / 4;
-        sampsCounterSilence = sampsPerBeat / 4;
+        timeComp1.setTempo((int)sliderTime.getValue());
+        timeComp2.setTempo((int)sliderTime.getValue());
     }
 }
 
@@ -47,19 +46,14 @@ void MainComponent::sliderValueChanged (juce::Slider* slider)
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
+
+    /*auto cyclesPerSample2 = currentFrequency2 / currentSampleRate;
+    angleDelta2 = cyclesPerSample2 * 2.0 * juce::MathConstants<double>::pi;*/
+    timeComp1.prepareToPlay(sampleRate);
+    timeComp1.setFrequency(500.0f);
     
-    currentSampleRate = sampleRate;
-    
-    sampsPerBeat = currentSampleRate / 4;
-    sampsCounterBeep = sampsPerBeat / 4;
-    sampsCounterSilence = sampsPerBeat / 4;
-    
-    DBG(currentSampleRate);
-    
-    
-    auto cyclesPerSample = currentFrequency / currentSampleRate;
-    angleDelta = cyclesPerSample * 2.0 * juce::MathConstants<double>::pi;
-    
+    timeComp2.prepareToPlay(sampleRate);
+    timeComp2.setFrequency(1000.0f);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -72,42 +66,11 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     // (to prevent the output of random noise)
     bufferToFill.clearActiveBufferRegion();
     
-    auto level = 0.0f;
+    //timeComp1.processBlock(bufferToFill);
+    timeComp2.processBlock(bufferToFill);
+
     
-    auto* leftBuffer  = bufferToFill.buffer->getWritePointer (0, bufferToFill.startSample);
-    auto* rightBuffer = bufferToFill.buffer->getWritePointer (1, bufferToFill.startSample);
-    
-    for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
-    {
-        if(sampsCounterBeep > 0)
-        {
-            level = 0.125f;
-            
-            auto currentSample = (float) std::sin (currentAngle);
-            currentAngle += angleDelta;
-            leftBuffer[sample]  = currentSample * level;
-            rightBuffer[sample] = currentSample * level;
-            sampsCounterBeep--;
-        }
-        else if(sampsCounterSilence > 0)
-        {
-            leftBuffer[sample]  = 0.0f;
-            rightBuffer[sample] = 0.0f;
-            sampsCounterSilence--;
-        }
-        
-        if(sampsCounterBeep == 0 && sampsCounterSilence == 0)
-        {
-            sampsCounterBeep = sampsPerBeat;
-            
-        }
-        else if(sampsCounterSilence == 0)
-        {
-            sampsCounterSilence = sampsPerBeat;
-        }
-    }
-    
-    /*
+    /*  
     if(isBeep)
     {
         level = 0.125f;

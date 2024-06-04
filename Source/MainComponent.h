@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-
+#include "TimeComponent.h"
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
@@ -28,16 +28,11 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
-    double currentSampleRate = 0.0, currentAngle = 0.0, angleDelta = 0.0;
-    double currentFrequency = 500.0, targetFrequency = 500.0; // [5]
-    
-    bool isBeep;
-    
+    TimeComponent timeComp1;
+    TimeComponent timeComp2;
+
+
     juce::Slider sliderTime;
-    
-    int sampsPerBeat = currentSampleRate;
-    int sampsCounterBeep = sampsPerBeat;
-    int sampsCounterSilence = sampsPerBeat;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
