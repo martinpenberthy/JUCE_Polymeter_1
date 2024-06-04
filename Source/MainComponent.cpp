@@ -24,7 +24,8 @@ MainComponent::MainComponent()
     
     addAndMakeVisible(&sliderTime);
     sliderTime.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-    sliderTime.setRange(10.0f, 1000.0f);
+    sliderTime.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 300, 50);
+    sliderTime.setRange(50.0f, 300.0f);
     sliderTime.addListener(this);
     
 }
@@ -39,7 +40,8 @@ void MainComponent::sliderValueChanged (juce::Slider* slider)
     if(slider == &sliderTime)
     {
         stopTimer();
-        timeInterval = (int)sliderTime.getValue();
+        
+        timeInterval = (int)sliderTime.getValue() / 60;
         startTimer(timeInterval);
     }
 }
@@ -78,6 +80,40 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     
     auto level = 0.0f;
     
+    auto* leftBuffer  = bufferToFill.buffer->getWritePointer (0, bufferToFill.startSample);
+    auto* rightBuffer = bufferToFill.buffer->getWritePointer (1, bufferToFill.startSample);
+    
+    for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
+    {
+        if(sampsCounterBeep > 0)
+        {
+            level = 0.125f;
+            
+            auto currentSample = (float) std::sin (currentAngle);
+            currentAngle += angleDelta;
+            leftBuffer[sample]  = currentSample * level;
+            rightBuffer[sample] = currentSample * level;
+            sampsCounterBeep--;
+        }
+        else if(sampsCounterSilence > 0)
+        {
+            leftBuffer[sample]  = 0.0f;
+            rightBuffer[sample] = 0.0f;
+            sampsCounterSilence--;
+        }
+        else if(sampsCounterBeep == 0)
+        {
+            
+                sampsCounterSilence = sampsPerBeat;
+            
+        }
+        else if(sampsCounterSilence == 0)
+        {
+            sampsCounterBeep = sampsPerBeat;
+        }
+    }
+    
+    /*
     if(isBeep)
     {
         level = 0.125f;
@@ -107,7 +143,8 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
             rightBuffer[sample] = currentSample * level;
         }
         DBG("Beep off");
-    }
+    }*/
+    
 }
 
 void MainComponent::releaseResources()
@@ -133,5 +170,5 @@ void MainComponent::resized()
     // If you add any child components, this is where you should
     // update their positions.
     
-    sliderTime.setBounds(100, 100, 20, 300);
+    sliderTime.setBounds(100, 100, 100, 300);
 }
