@@ -51,9 +51,11 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     angleDelta2 = cyclesPerSample2 * 2.0 * juce::MathConstants<double>::pi;*/
     timeComp1.prepareToPlay(sampleRate);
     timeComp1.setFrequency(500.0f);
+    timeComp1.setMeter(4);
     
     timeComp2.prepareToPlay(sampleRate);
     timeComp2.setFrequency(1000.0f);
+    timeComp2.setMeter(5);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -66,7 +68,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     // (to prevent the output of random noise)
     bufferToFill.clearActiveBufferRegion();
     
-    //timeComp1.processBlock(bufferToFill);
+    timeComp1.processBlock(bufferToFill);
     timeComp2.processBlock(bufferToFill);
 
     

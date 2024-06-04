@@ -70,9 +70,17 @@ class TimeComponent
     
         void setTempo(int tempo)
         {
+            currTempo = tempo;
             sampsPerBeat = currentSampleRate / (tempo / 30);
             sampsCounterBeep = sampsPerBeat / 4;
             sampsCounterSilence = sampsPerBeat / 4;
+        }
+    
+        void setMeter(int meter)
+        {
+            sampsPerBeat = currentSampleRate / (currTempo / 30);
+            sampsCounterBeep = sampsPerBeat / meter;
+            sampsCounterSilence = sampsPerBeat / meter;
         }
         void setFrequency(double newFreq)
         {
@@ -89,4 +97,6 @@ class TimeComponent
         int sampsPerBeat = currentSampleRate;
         int sampsCounterBeep = sampsPerBeat;
         int sampsCounterSilence = sampsPerBeat;
+        
+    int currTempo = 4;
 };
