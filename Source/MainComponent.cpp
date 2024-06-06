@@ -69,7 +69,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     bufferToFill.clearActiveBufferRegion();
     
     timeComp1.processBlock(bufferToFill);
-    timeComp2.processBlock(bufferToFill);
+    //timeComp2.processBlock(bufferToFill);
 
     
     /*  

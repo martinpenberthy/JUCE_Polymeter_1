@@ -73,8 +73,10 @@ class TimeComponent
             currTempo = tempo;
             //Calculate sample counts for new meter
             sampsPerBeat = currentSampleRate / (tempo / 30);
-            sampsCounterBeep = sampsPerBeat / currMeter;
-            sampsCounterSilence = sampsPerBeat / currMeter;
+            /*sampsCounterBeep = sampsPerBeat / currMeter;
+            sampsCounterSilence = sampsPerBeat / currMeter;*/
+            sampsCounterBeep = sampsPerBeat / 2;
+            sampsCounterSilence = sampsPerBeat / 2;
         }
     
         void setMeter(int meter)
@@ -82,8 +84,10 @@ class TimeComponent
             currMeter = meter;
             //Calculate sample counts for new meter
             sampsPerBeat = currentSampleRate / (currTempo / 30);
-            sampsCounterBeep = sampsPerBeat / currMeter;
-            sampsCounterSilence = sampsPerBeat / currMeter;
+            /*sampsCounterBeep = sampsPerBeat / currMeter;
+            sampsCounterSilence = sampsPerBeat / currMeter;*/
+            sampsCounterBeep = sampsPerBeat / 2;
+            sampsCounterSilence = sampsPerBeat / 2;
         }
         void setFrequency(double newFreq)
         {
