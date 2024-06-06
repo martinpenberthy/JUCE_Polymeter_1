@@ -37,8 +37,8 @@ void MainComponent::sliderValueChanged (juce::Slider* slider)
 {
     if(slider == &sliderTime)
     {
-        timeComp1.setTempo((int)sliderTime.getValue());
-        timeComp2.setTempo((int)sliderTime.getValue());
+        timeComp1.setTempo(sliderTime.getValue());
+        timeComp2.setTempo(sliderTime.getValue());
     }
 }
 
