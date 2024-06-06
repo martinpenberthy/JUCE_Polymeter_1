@@ -55,7 +55,7 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     
     timeComp2.prepareToPlay(sampleRate);
     timeComp2.setFrequency(1000.0f);
-    timeComp2.setMeter(5);
+    timeComp2.setMeter(8);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
